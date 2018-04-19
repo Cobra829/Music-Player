@@ -37,7 +37,10 @@ class MyWindowClass(QtGui.QMainWindow,from_class):
         self.pushButton_3.clicked.connect(self.back)
         self.pushButton_6.clicked.connect(self.frwd)
         self.pushButton_7.clicked.connect(self.clr)
-        self.volumeslider.triggered.connect(self.setVolume)
+        #self.pushButton_2.clicked.connect(self.loop)
+        self.connect(self.volumeslider,
+                     QtCore.SIGNAL("valueChanged(int)"),
+                     self.setVolume)
         
         '''self.positionslider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.positionslider.setToolTip("Position")
@@ -46,21 +49,10 @@ class MyWindowClass(QtGui.QMainWindow,from_class):
                      QtCore.SIGNAL("sliderMoved(int)"), self.setPosition)'''
 
 
-        '''
-        self.volumeslider.setMaximum(100)
-        self.volumeslider.setValue(self.mediaplayer.audio_get_volume())
-        self.volumeslider.setToolTip("Volume")
-        #self.hbuttonbox.addWidget(self.volumeslider)
-        self.connect(self.volumeslider,
-                     QtCore.SIGNAL("valueChanged(int)"),
-                     self.setVolume)'''
 #JUST GET VOLUME TO WORK FIRST
 
 
-        '''def setVolume(self, Volume):
-        """Set the volume
-        """
-        self.mediaplayer.audio_set_volume(Volume)'''
+
 
     '''def setPosition(self, position):
         """Set the position
@@ -150,6 +142,14 @@ class MyWindowClass(QtGui.QMainWindow,from_class):
                 self.pushButton.setText('Play')
                 print('Paused')
             except:None
+            
+
+    def setVolume(self, Volume):
+        """Set the volume
+        """
+        #self.volumeslider.setValue(self.aud.audio_get_volume())
+        self.mediaplayer.audio_set_volume(Volume)
+        
 app=QtGui.QApplication(sys.argv)
 myWindow=MyWindowClass()
 myWindow.show()
